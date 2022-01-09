@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <br><br><br>
+        <div class="row">
+            <div class="col-5">
+                <h2>Sélectionnez une entreprise</h2>
+            </div>
+        </div>
+        <br><br>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Activité</th>
+                    <th scope="col">Adresse</th>
+                    <th scope="col">Stages</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entreprise in entreprises %}
+                    <tr>
+                        <th scope="row">{{entreprise.id}}</th>
+                        <td>{{entreprise.nom}}</td>
+                        <td>{{entreprise.activite}}</td>
+                        <td>{{entreprise.adresse}}</td>
+                        <td><a href="/entreprises/{{entreprise.id}}" class="btn btn-primary btn-sm">Sélectionner</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

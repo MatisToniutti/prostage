@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <br><br><br>
+        <div class="row">
+            <div class="col-12">
+                <h2>Détails du stage {{stage.titre}}</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <p>Mission : {{stage.mission}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <p>Entreprise : {{stage.entreprise.nom}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <p>Email : {{stage.email}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <p>Formations : {% for formation in stage.formations %}
+                    {{formation.nomCourt}}
+                    {% if loop.last == false %}
+                    , 
+                    {% endif %}
+                {% endfor %}
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

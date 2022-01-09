@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <br><br><br>
+        <div class="row">
+            <div class="col-12">
+                <h2>Sélectionnez une formation</h2>
+            </div>
+        </div>
+        <br><br>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nom court</th>
+                    <th scope="col">Nom Long</th>
+                    <th scope="col">Stages</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for formation in formations %}
+                    <tr>
+                        <th scope="row">{{formation.id}}</th>
+                        <td>{{formation.nomCourt}}</td>
+                        <td>{{formation.nomLong}}</td>
+                        <td><a href="/formations/{{formation.id}}" class="btn btn-primary btn-sm">Sélectionner</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
