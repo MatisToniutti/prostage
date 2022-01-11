@@ -24,7 +24,7 @@
                         <th scope="row">{{formation.id}}</th>
                         <td>{{formation.nomCourt}}</td>
                         <td>{{formation.nomLong}}</td>
-                        <td><a href="/formations/{{formation.id}}" class="btn btn-primary btn-sm">Sélectionner</a></td>
+                        <td><a href="{{ path('stagesFormation',{'id': formation.id }) }}" class="btn btn-primary btn-sm">Sélectionner</a></td>
                     </tr>
                 {% endfor %}
             </tbody>

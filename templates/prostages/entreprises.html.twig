@@ -26,7 +26,7 @@
                         <td>{{entreprise.nom}}</td>
                         <td>{{entreprise.activite}}</td>
                         <td>{{entreprise.adresse}}</td>
-                        <td><a href="/entreprises/{{entreprise.id}}" class="btn btn-primary btn-sm">Sélectionner</a></td>
+                        <td><a href="{{ path('stagesEntreprise',{'id': entreprise.id }) }}" class="btn btn-primary btn-sm">Sélectionner</a></td>
                     </tr>
                 {% endfor %}
             </tbody>
