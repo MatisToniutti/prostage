@@ -13,7 +13,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $nbEntreprises=5;
-        $nbStagesParFormation=2;
+        $nbStagesParFormation=10;
         $nbFormations=5;
         $nbStages=0; //utilisé pour générer les variables
 

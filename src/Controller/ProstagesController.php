@@ -59,8 +59,8 @@ class ProstagesController extends AbstractController
     {
         $repositoryStage=$this->getDoctrine()->getRepository(Stage::Class);
         $repositoryEntreprise=$this->getDoctrine()->getRepository(Entreprise::Class);
+        $stages = $repositoryStage->trouverStagesParEntreprise($id);
         $entreprise=$repositoryEntreprise->find($id);
-        $stages = $repositoryStage->findBy(['entreprise'=>$entreprise]);
         return $this->render('prostages/stagesEntreprise.html.twig', 
         ['stages' => $stages,'entreprise' => $entreprise]);
     }
@@ -70,9 +70,11 @@ class ProstagesController extends AbstractController
      */
     public function stageFormations($id): Response
     {
+        $repositoryStage=$this->getDoctrine()->getRepository(Stage::Class);
         $repositoryFormation=$this->getDoctrine()->getRepository(Formation::Class);
+        $stages = $repositoryStage->trouverStagesParFormation($id);
         $formation=$repositoryFormation->find($id);
         return $this->render('prostages/stagesFormation.html.twig', 
-        ['formation' => $formation]);
+        ['stages' => $stages,'formation' => $formation]);
     }
 }
