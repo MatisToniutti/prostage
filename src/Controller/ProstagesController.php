@@ -8,6 +8,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Stage;
 use App\Entity\Formation;
 use App\Entity\Entreprise;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+
 
 class ProstagesController extends AbstractController
 {
@@ -29,6 +32,39 @@ class ProstagesController extends AbstractController
         $repositoryRessource=$this->getDoctrine()->getRepository(Entreprise::Class);
         $entreprises = $repositoryRessource->findAll();
         return $this->render('prostages/entreprises.html.twig',['entreprises'=>$entreprises]);
+    }
+
+    /**
+     * @Route("/creerEntreprise", name="creerEntreprise")
+     */
+    public function creerEntreprise(): Response
+    {
+        $entreprise = new Entreprise();
+        $creerEntreprise = $this->createFormBuilder($entreprise)
+        ->add("activite",TextType::class)
+        ->add("adresse",TextType::class)
+        ->add("nom",TextType::class)
+        ->add("URLSite",UrlType::class)
+        ->getForm();
+        
+        return $this->render('prostages/creerEntreprise.html.twig',['vueFormulaire' => $creerEntreprise->createView()]);
+    }
+
+    /**
+     * @Route("/modifierEntreprise/{id}", name="modifierEntreprise")
+     */
+    public function modifierEntreprise($id): Response
+    {
+        $repositoryEntreprise=$this->getDoctrine()->getRepository(Entreprise::Class);
+        $entreprise=$repositoryEntreprise->find($id);
+
+        $modifierEntreprise = $this->createFormBuilder($entreprise)
+        ->add("activite",TextType::class)
+        ->add("adresse",TextType::class)
+        ->add("nom",TextType::class)
+        ->add("URLSite",UrlType::class)
+        ->getForm();
+        return $this->render('prostages/modifierEntreprise.html.twig',['vueFormulaire' => $modifierEntreprise->createView()]);
     }
 
     /**

@@ -17,6 +17,7 @@
                     <th scope="col">Activité</th>
                     <th scope="col">Adresse</th>
                     <th scope="col">Stages</th>
+                    <th scope="col">Modifier</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,6 +28,7 @@
                         <td>{{entreprise.activite}}</td>
                         <td>{{entreprise.adresse}}</td>
                         <td><a href="{{ path('stagesEntreprise',{'id': entreprise.id }) }}" class="btn btn-primary btn-sm">Sélectionner</a></td>
+                        <td><a href="{{ path('modifierEntreprise',{'id': entreprise.id }) }}" class="btn btn-primary btn-sm">Modifier</a></td>
                     </tr>
                 {% endfor %}
             </tbody>

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h2>Création d'une entreprise</h2>
+    {{form_start(vueFormulaire)}}
+    <label>Nom de l'entreprise</label>
+    {{form_widget(vueFormulaire.nom,{'attr' :{'placeholder':"Nom de l'entreprise..."}})}}
+    <br>
+    <label>Adresse de l'entreprise</label>
+    {{form_widget(vueFormulaire.adresse,{'attr' :{'placeholder':"Adresse de l'entreprise..."}})}}
+    <br>
+
+    <label>Activité de l'entreprise</label>
+    {{form_widget(vueFormulaire.activite,{'attr' :{'placeholder':"Activité de l'entreprise..."}})}}
+    <br>
+
+    <label>URL de l'entreprise</label>
+    {{form_widget(vueFormulaire.URLSite,{'attr' :{'placeholder':"URL de l'entreprise..."}})}}
+
+    <button type="submit" class="btn btn-dark">Enregistrer</button>
+    {{form_end(vueFormulaire)}}
+
+{% endblock %}
