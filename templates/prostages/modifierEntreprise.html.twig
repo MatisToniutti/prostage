@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h2>Modification d'une entreprise</h2>
+    {{form_start(vueFormulaire)}}
+        {{ form_row(vueFormulaire.activite)}} <br>
+        {{ form_row(vueFormulaire.adresse)}} <br>
+        {{ form_row(vueFormulaire.nom)}} <br>
+        {{ form_row(vueFormulaire.URLSite)}} <br>
+    <button type="submit" class="btn btn-dark">Enregistrer</button>
+    {{form_end(vueFormulaire)}}
+
+{% endblock %}

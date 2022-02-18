@@ -4,10 +4,14 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Stage;
 use App\Entity\Formation;
 use App\Entity\Entreprise;
+use App\Form\StageType;
+use App\Form\EntrepriseType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
@@ -35,36 +39,20 @@ class ProstagesController extends AbstractController
     }
 
     /**
-     * @Route("/creerEntreprise", name="creerEntreprise")
-     */
-    public function creerEntreprise(): Response
-    {
-        $entreprise = new Entreprise();
-        $creerEntreprise = $this->createFormBuilder($entreprise)
-        ->add("activite",TextType::class)
-        ->add("adresse",TextType::class)
-        ->add("nom",TextType::class)
-        ->add("URLSite",UrlType::class)
-        ->getForm();
-        
-        return $this->render('prostages/creerEntreprise.html.twig',['vueFormulaire' => $creerEntreprise->createView()]);
-    }
-
-    /**
      * @Route("/modifierEntreprise/{id}", name="modifierEntreprise")
      */
-    public function modifierEntreprise($id): Response
+    public function modifierEntreprise($id,Request $request, EntityManagerInterface $manager): Response
     {
         $repositoryEntreprise=$this->getDoctrine()->getRepository(Entreprise::Class);
         $entreprise=$repositoryEntreprise->find($id);
-
-        $modifierEntreprise = $this->createFormBuilder($entreprise)
-        ->add("activite",TextType::class)
-        ->add("adresse",TextType::class)
-        ->add("nom",TextType::class)
-        ->add("URLSite",UrlType::class)
-        ->getForm();
-        return $this->render('prostages/modifierEntreprise.html.twig',['vueFormulaire' => $modifierEntreprise->createView()]);
+        $formulaireEntreprise = $this->createForm(EntrepriseType::class, $entreprise);
+        $formulaireEntreprise -> handleRequest($request);
+        if($formulaireEntreprise->isSubmitted()&&$formulaireEntreprise->isValid()){
+            $manager->persist($entreprise);
+            $manager->flush();
+            return $this->redirectToRoute("entreprises",['id'=> $entreprise->getId()]);
+        }
+        return $this->render('prostages/modifierEntreprise.html.twig',['vueFormulaire' => $formulaireEntreprise->createView()]);
     }
 
     /**
@@ -112,5 +100,22 @@ class ProstagesController extends AbstractController
         $formation=$repositoryFormation->find($id);
         return $this->render('prostages/stagesFormation.html.twig', 
         ['stages' => $stages,'formation' => $formation]);
+    }
+
+    /**
+     * @Route("/creerStage", name="creerStage")
+     */
+    public function creerStage(Request $request, EntityManagerInterface $manager)
+    {
+        $stage = new Stage();
+        $formulaireStage = $this->createForm(StageType::class, $stage);
+        $formulaireStage -> handleRequest($request);
+        if($formulaireStage->isSubmitted()&&$formulaireStage->isValid()){
+            $manager->persist($stage);
+            $manager->persist($stage->getEntreprise());
+            $manager->flush();
+            return $this->redirectToRoute("stages",['id'=> $stage->getId()]);
+        }
+        return $this->render('prostages/creerStage.html.twig',['vueFormulaire' => $formulaireStage->createView()]);
     }
 }
