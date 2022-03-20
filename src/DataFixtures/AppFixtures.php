@@ -7,6 +7,8 @@ use Doctrine\Persistence\ObjectManager;
 use App\Entity\Entreprise;
 use App\Entity\Stage;
 use App\Entity\Formation;
+use App\Entity\User;
+
 
 class AppFixtures extends Fixture
 {
@@ -53,6 +55,18 @@ class AppFixtures extends Fixture
         $entreprise5->setURLSite("URL5");
         $manager->persist($entreprise5);
         $manager->flush();
+
+        $admin = new User();
+        $admin->setEmail("admin@gmail.com");
+        $admin->setRoles(['ROLE_USER', 'ROLE_ADMIN']);
+        $admin->setPassword('$2y$10$u2W01YALSXoqEvkh16cn5uXxnRKADPxgGMn37tg/W9swjTiqmeWCi');
+        $manager->persist($admin);
+
+        $user = new User();
+        $user->setEmail("user@gmail.com");
+        $user->setRoles(['ROLE_USER']);
+        $user->setPassword('$2y$10$0p7S6HLV2Rf7ZOZPCDGgCOlyMsBmuHh4nFxtF1evp3ynyqTPxGCiy');
+        $manager->persist($user);
 
         $tabEntreprises = array($entreprise1,$entreprise2,$entreprise3,$entreprise4,$entreprise5);
 
