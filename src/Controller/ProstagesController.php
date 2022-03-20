@@ -118,4 +118,21 @@ class ProstagesController extends AbstractController
         }
         return $this->render('prostages/creerStage.html.twig',['vueFormulaire' => $formulaireStage->createView()]);
     }
+
+    /**
+     * @Route("/creerEntreprise", name="creerEntreprise")
+     */
+    public function creerEntreprise(Request $request, EntityManagerInterface $manager)
+    {
+        $entreprise = new Entreprise();
+        $formulaireEntreprise = $this->createForm(EntrepriseType::class, $entreprise);
+        $formulaireEntreprise -> handleRequest($request);
+        if($formulaireEntreprise->isSubmitted()&&$formulaireEntreprise->isValid()){
+            $manager->persist($entreprise);
+            $manager->persist($entreprise->getEntreprise());
+            $manager->flush();
+            return $this->redirectToRoute("entreprises",['id'=> $entreprise->getId()]);
+        }
+        return $this->render('prostages/creerEntreprise.html.twig',['vueFormulaire' => $formulaireEntreprise->createView()]);
+    }
 }
