@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h2>Inscription</h2>
+    {{form_start(vueFormulaire)}}
+        {{ form_row(vueFormulaire.email)}} <br>
+        {{ form_row(vueFormulaire.password)}} <br>
+    <button type="submit" class="btn btn-dark">Enregistrer</button>
+    {{form_end(vueFormulaire)}}
+
+{% endblock %}
