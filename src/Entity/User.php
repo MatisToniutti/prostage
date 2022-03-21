@@ -54,6 +54,11 @@ class User implements UserInterface
         return $this;
     }
 
+    public function __toString(): string
+    {
+        return $this->email;
+    }
+
     /**
      * A visual identifier that represents this user.
      *
